@@ -10,7 +10,7 @@ let service2 = prompt('Какой дополнительный тип услуг
 let servicePrice2 = +prompt('Сколько это будет стоить?');
 
 let allServicePrices, fullPrice, servicePercentPrice;
-let rollback = 5;
+const rollback = 5;
 
 const showTypeOf = function(variable) {
   console.log(variable, typeof variable); 
