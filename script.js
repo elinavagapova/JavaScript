@@ -11,11 +11,9 @@ const asking = function () {
   title = prompt('Как называется ваш проект?');
   screens = prompt('Какие типы экранов нужно разработать?');
 
-  screenPrice = +prompt('Сколько будет стоить данная работа?');
-
-  while (!isNumder(screenPrice)) {
-    screenPrice = prompt('Сколько будет стоить данная работа?');
-  }
+  do {
+    screenPrice = +prompt('Сколько будет стоить данная работа?');
+  } while (!isNumder(screenPrice));
 
   adaptive = confirm('Нужен ли адаптив?');
 };
@@ -28,12 +26,20 @@ const getAllServicePrices = function() {
   let sum = 0;
 
   for (let i = 0; i < 2; i++) {
+    let check;
+
     if (i === 0) {
       service1 = prompt('Какой дополнительный тип услуги нужен?');
     } else if (i === 1) {
       service2 = prompt('Какой дополнительный тип услуги нужен?');
     }
-    sum += +prompt("Сколько это будет стоить?");
+
+    check = +prompt('Сколько будет стоить данная работа?');
+
+    while (!isNumder(check)) {
+      check = +prompt('Сколько будет стоить данная работа?');
+    }
+    sum += check;
   }
 
   return sum;
