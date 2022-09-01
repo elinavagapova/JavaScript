@@ -1,5 +1,20 @@
 'use string';
 
+const calc = document.getElementsByTagName('h1')[0];
+const button1 = document.getElementsByClassName('handler_btn')[0];
+const button2 = document.getElementsByClassName('handler_btn')[1];
+const plus = document.querySelector('.screen-btn');
+const percent = document.querySelectorAll('.percent');
+const number = document.querySelectorAll('.number');
+const input = document.querySelector('.rollback > div > input');
+const span = document.querySelector('.rollback > div > span');
+const input1 = document.getElementsByClassName('total-input')[0];
+const input2 = document.getElementsByClassName('total-input')[1];
+const input3 = document.getElementsByClassName('total-input')[2];
+const input4 = document.getElementsByClassName('total-input')[3];
+const input5 = document.getElementsByClassName('total-input')[4];
+let allDiv = document.querySelectorAll('.screen');
+
 const appData = {
   title: '', 
   screens: [],
