@@ -1,31 +1,122 @@
-'use strict';
+'use string';
 
-const book = document.querySelectorAll('.book');
-const div = document.querySelectorAll('div');
-const title3 = div[4].querySelector('a');
-const adv = document.querySelector('.adv');
-const book2 = div[0].querySelectorAll('li');
-const book5 = div[5].querySelectorAll('li');
-const book6 = div[2].querySelectorAll('li');
-const newChapter = document.createElement('li');
+const calc = document.getElementsByTagName('h1')[0];
+const button1 = document.getElementsByClassName('handler_btn')[0];
+const button2 = document.getElementsByClassName('handler_btn')[1];
+const plus = document.querySelector('.screen-btn');
+const percent = document.querySelectorAll('.percent');
+const number = document.querySelectorAll('.number');
+const input = document.querySelector('.rollback > div > input');
+const span = document.querySelector('.rollback > div > span');
+const input1 = document.getElementsByClassName('total-input')[0];
+const input2 = document.getElementsByClassName('total-input')[1];
+const input3 = document.getElementsByClassName('total-input')[2];
+const input4 = document.getElementsByClassName('total-input')[3];
+const input5 = document.getElementsByClassName('total-input')[4];
+let allDiv = document.querySelectorAll('.screen');
 
-book[0].before(book[1]);
-book[2].before(book[4]);
-book[5].after(book[2]);
+const appData = {
+  title: '', 
+  screens: [],
+  screenPrice: 0, 
+  adaptive: true,
+  rollback: 5,
+  allServicePrices: 0, 
+  fullPrice: 0,
+  servicePercentPrice: 0,
+  services: {},
+  asking: function () {
+    appData.title = prompt('Как называется ваш проект?');
+    while (appData.isNumder(parseInt(appData.title))) {
+      appData.title = prompt('Как называется ваш проект?');
+    }
 
-document.body.style.backgroundImage = 'url(./image/you-dont-know-js.jpg)';
+    for (let i = 0; i < 2; i++) {
+      let name = prompt('Какие типы экранов нужно разработать?');
+      let price;
 
-title3.textContent = 'Книга 3. this и Прототипы Объектов';
+      while (appData.isNumder(parseInt(name))) {
+        name = prompt('Какие типы экранов нужно разработать?');
+      }
 
-adv.remove();
+      do {
+        price = +prompt('Сколько будет стоить данная работа?');
+      } while (!appData.isNumder(price));
 
-book2[3].after(book2[6]);
-book2[4].before(book2[8]);
-book2[9].after(book2[2]);
-book5[1].after(book5[9]);
-book5[4].after(book5[2]);
-book5[7].after(book5[5]);
+      appData.screens.push({id: i, name: name, price: price});
+    }
+  
+    appData.adaptive = confirm('Нужен ли адаптив?');
 
-newChapter.textContent = 'Глава 8: За пределами ES6';
-book6[8].after(newChapter);
+    for (let i = 0; i < 2; i++) {
+      let name;
+      let price;
+
+      do {
+        name = prompt('Какой дополнительный тип услуги нужен?');
+      } while (appData.isNumder(parseInt(name)));
+  
+      price = +prompt('Сколько это будет стоить?');
+  
+      while (!appData.isNumder(price)) {
+        price = +prompt('Сколько это будет стоить?');
+      }
+      appData.services[name] = +price;
+    }
+  },
+
+  addPrices: function() {
+    for (let screen of appData.screens) {
+      appData.screenPrice += screen.price;
+    }
+    for (let key in appData.services) {
+      appData.allServicePrices +=appData.services[key];
+    }
+  },
+  isNumder: function(num) {
+    return !isNaN(parseFloat(num)) && isFinite(num);
+  },
+  getFullPrice: function() {
+    appData.fullPrice = appData.screenPrice + appData.allServicePrices;
+  },
+  getTitle: function() {
+    appData.title = appData.title.trim()[0].toUpperCase() + appData.title.trim().substring(1).toLowerCase();
+  },
+  getServicePercentPrices: function() {
+    appData.servicePercentPrice = appData.fullPrice - (appData.fullPrice * (appData.rollback/100));
+  },
+  getRollBackMessage: function(price) {
+    if (price >= 30000) {
+      return "Даем скидку в 10%";
+    } else if (price > 15000 && price < 30000) {
+      return "Даем скидку в 5%";
+    } else if (price > 0 && price <= 15000) {
+      return "Скидка не предусмотрена";
+    } else {
+      return"Что то пошло не так";
+    }
+  },
+  start: function() {
+    appData.asking();
+    appData.addPrices();
+    appData.getFullPrice();
+    appData.getServicePercentPrices();
+    appData.getTitle();
+    appData.logger();
+  },
+  logger: function() {
+    console.log(appData.fullPrice);
+    console.log(appData.servicePercentPrice);
+    console.log(appData.screens);
+    for (let key in appData) {
+      console.log("Ключ:" + key + " " + "Значение:" + appData[key]);
+    }
+  },
+
+};
+
+appData.start();
+
+
+
 
