@@ -40,10 +40,20 @@ const appData = {
   },
 
   start: function() {
+    appData.screens.length = 0;
     appData.addScreens();
-    appData.addServices();
-    appData.addPrices();
-    appData.showResult();
+
+    const result = appData.screens.find((item) => item.name === 'Тип экранов' || item.count === 0);
+    if(result !== undefined) {
+      alert('Заполните пустые ячейки');
+    }
+
+    if(result === undefined) {
+      appData.addServices();
+      appData.addPrices();
+      appData.showResult();
+    }
+
     //appData.logger(); 
   },
 
@@ -70,7 +80,6 @@ const appData = {
         count: +input.value
       });
     });
-    console.log(appData.screens);
   },
 
   addServices: function() {
